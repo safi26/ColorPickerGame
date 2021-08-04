@@ -8,8 +8,9 @@
 //     // "rgb(0, 255, 255)",
 //     // "rgb(255, 0, 255)",
 // ]
+let numberOfSquares = 6;
 
-let colors = generateRandomColors(6);
+let colors = generateRandomColors(numberOfSquares);
 
 let h1 = document.querySelector("h1");
 let resetButton = document.querySelector("#reset");
@@ -27,18 +28,49 @@ let hardBtn = document.querySelector("#hardBtn");
 easyBtn.addEventListener("click", function () {
     hardBtn.classList.remove("selected");
     easyBtn.classList.add("selected");
+
+    numberOfSquares = 3;
+    colors = generateRandomColors(numberOfSquares);
+    pickedColor = pickColor();
+    colorDisplay.textContent = pickedColor;
+
+    for (let i = 0; i < squares.length; i++) {
+        if (colors[i]) {
+            squares[i].style.background = colors[i];
+        } else {
+            squares[i].style.display = "none";
+        }
+
+    }
+
 })
 
 hardBtn.addEventListener("click", function () {
     easyBtn.classList.remove("selected");
     hardBtn.classList.add("selected");
+
+    numberOfSquares = 6;
+    colors = generateRandomColors(numberOfSquares);
+    pickedColor = pickColor();
+    colorDisplay.textContent = pickedColor;
+
+    for (let i = 0; i < squares.length; i++) {
+        if (colors[i]) {
+            squares[i].style.background = colors[i];
+            squares[i].style.display = "block";
+        }
+
+
+    }
+
+
 })
 
 resetButton.addEventListener("click", function () {
     resetButton.textContent = "New Colors";
     messageDisplay.textContent = "";
     //generate new colors
-    colors = generateRandomColors(6);
+    colors = generateRandomColors(numberOfSquares);
     //pick new random color from array
     pickedColor = pickColor();
     //change colorDisplay to match new color
@@ -48,7 +80,7 @@ resetButton.addEventListener("click", function () {
         squares[i].style.background = colors[i];
     }
 
-    h1.style.background = 0;
+    h1.style.background = "steelblue";
 
 
 })
@@ -67,7 +99,7 @@ for (let i = 0; i < squares.length; i++) {
     //adding click listeners to squares
     squares[i].addEventListener("click", function () {
         let clickedColor = this.style.background;
-        console.log(clickedColor, pickedColor);
+        console.log("clicked color: ", clickedColor, "picked color: ", pickedColor);
 
 
         if (clickedColor === pickedColor) {
@@ -96,7 +128,8 @@ function changeColors(color) {
 
 function pickColor() {
     let randomNumber = Math.floor(Math.random() * colors.length);
-    console.log(randomNumber);
+    console.log("colors array length in pickColor function: ", colors.length);
+    console.log("random number", randomNumber);
     return colors[randomNumber];
 }
 
